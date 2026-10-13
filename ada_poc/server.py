@@ -21,7 +21,7 @@ class Handler(BaseHTTPRequestHandler):
         event = {'timestamp': datetime.now(timezone.utc).isoformat(), 'method': self.command,
                  'path': parsed.path, 'query': parsed.query, 'source_ip': self.client_address[0],
                  'user_agent': self.headers.get('User-Agent', ''), 'referer': self.headers.get('Referer', '')}
-    with LOCK:
+with LOCK:
     with LOG.open('a', encoding='utf-8') as f:
         f.write(json.dumps(event) + '\n')
     print("POC_REQUEST " + json.dumps(event), flush=True)
